@@ -6,7 +6,7 @@ Check out the [live API hosted on Heroku](https://movie-database-graphql.herokua
 
 ## Expanded example from @agustif
 
-@agustif has expanded this example and added a lot of different kinds of data! Check it out here: [agustif/movie-database-graphql](/https://github.com/agustif/movie-database-graphql)
+@agustif has expanded this example and added a lot of different kinds of data! Check it out here: [agustif/movie-database-graphql](https://github.com/agustif/movie-database-graphql)
 
 ## Running the app
 
