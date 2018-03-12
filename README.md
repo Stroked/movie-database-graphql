@@ -2,7 +2,7 @@
 
 This is a super simple wrapper of the REST API for [The Movie Database](https://www.themoviedb.org/) to convert it to GraphQL.
 
-Check out the [live API hosted on Heroku](https://react-async-graphql.herokuapp.com/graphiql).
+Check out the [live API hosted on Heroku](https://movie-database-graphql.herokuapp.com/graphiql).
 
 ## Running the app
 
