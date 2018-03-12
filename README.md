@@ -4,6 +4,10 @@ This is a super simple wrapper of the REST API for [The Movie Database](https://
 
 Check out the [live API hosted on Heroku](https://movie-database-graphql.herokuapp.com/graphiql).
 
+## Expanded example from @agustif
+
+@agustif has expanded this example and added a lot of different kinds of data! Check it out here: [agustif/movie-database-graphql](/https://github.com/agustif/movie-database-graphql)
+
 ## Running the app
 
 You'll need two API keys:
