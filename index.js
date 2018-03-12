@@ -84,7 +84,7 @@ if (!process.env.TMDB_API_KEY) {
 
 if (!process.env.ENGINE_API_KEY) {
   throw new Error(
-    "Please provide an API key for themoviedb.org in the environment variable ENGINE_API_KEY."
+    "Please provide an API key for Apollo Engine in the environment variable ENGINE_API_KEY."
   );
 }
 
