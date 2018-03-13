@@ -4,8 +4,7 @@ const { graphqlExpress, graphiqlExpress } = require("apollo-server-express");
 const { makeExecutableSchema } = require("graphql-tools");
 const fetch = require("node-fetch");
 const cors = require("cors");
-const compression = require("compression");
-const { Engine } = require("apollo-engine");
+const { ApolloEngine } = require("apollo-engine");
 
 const TMDB_API_PATH = "https://api.themoviedb.org/3";
 
@@ -90,9 +89,7 @@ if (!process.env.ENGINE_API_KEY) {
 
 const PORT = process.env.PORT || 3000;
 
-app.use(initApolloEngine().expressMiddleware());
 app.use(cors());
-app.use(compression());
 
 // The GraphQL endpoint
 app.use(
@@ -111,35 +108,44 @@ app.use(
 );
 
 // GraphiQL, a visual editor for queries
-app.use("/graphiql", graphiqlExpress({ endpointURL: "/graphql" }));
+app.use(
+  "/graphiql",
+  graphiqlExpress({
+    endpointURL: "/graphql",
+    query: `query StarWars {
+  movies(query: "Star Wars") {
+    title
+    overview
+  }
+}
+`
+  })
+);
 
 app.use(express.static("public"));
 
-// Start the server
-app.listen(PORT, () => {
-  console.log(`Go to http://localhost:${PORT}/graphiql to run queries!`);
+const engine = new ApolloEngine({
+  apiKey: process.env.ENGINE_API_KEY,
+  stores: [
+    {
+      name: "publicResponseCache",
+      inMemory: {
+        cacheSize: 10485760
+      }
+    }
+  ],
+  queryCache: {
+    publicFullQueryStore: "publicResponseCache"
+  }
 });
 
-function initApolloEngine() {
-  const engine = new Engine({
-    engineConfig: {
-      apiKey: process.env.ENGINE_API_KEY,
-      stores: [
-        {
-          name: "publicResponseCache",
-          inMemory: {
-            cacheSize: 10485760
-          }
-        }
-      ],
-      queryCache: {
-        publicFullQueryStore: "publicResponseCache"
-      }
-    },
-    graphqlPort: PORT
-  });
-
-  engine.start();
-
-  return engine;
-}
+// Start the server
+engine.listen(
+  {
+    port: PORT,
+    expressApp: app
+  },
+  () => {
+    console.log(`Go to http://localhost:${PORT}/graphiql to run queries!`);
+  }
+);
