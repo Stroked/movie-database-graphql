@@ -8,8 +8,11 @@ const { ApolloEngine } = require("apollo-engine");
 
 const TMDB_API_PATH = "https://api.themoviedb.org/3";
 
+// Tag schema strings so they can be formatted with prettier
+const gql = String.raw;
+
 // Construct a schema, using GraphQL schema language
-const typeDefs = `
+const typeDefs = gql`
   # Cache all types in Apollo Engine for an hour
   # since the data never changes. maxAge is in seconds
   # See docs here: https://www.apollographql.com/docs/engine/caching.html
@@ -20,21 +23,21 @@ const typeDefs = `
   }
 
   type Movie @cacheControl(maxAge: 3600) {
-		id: Int
+    id: Int
     title: String
     poster_path: String
     overview: String
   }
 
-	type Images @cacheControl(maxAge: 3600) {
-  	poster_sizes: [String]
-		base_url: String
-		secure_base_url: String
-	}
+  type Images @cacheControl(maxAge: 3600) {
+    poster_sizes: [String]
+    base_url: String
+    secure_base_url: String
+  }
 
   type Config @cacheControl(maxAge: 3600) {
-		images: Images
-	}
+    images: Images
+  }
 `;
 
 const resolvers = {
